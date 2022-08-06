@@ -1,32 +1,44 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+// import reactLogo from './assets/react.svg'
+// import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [threshold, setThreshold] = useState(0.5)
+  const threshChange = (e) => {
+    setThreshold(e.target.value)
+  }
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="container mx-auto py-5">
+      <h1 className='text-center font-bold text-3xl'>Template Matching Simulator</h1>
+      <div className="flex flex-row items-start mt-5 justify-between">
+        <div>
+          <h2 className='font-bold text-xl'>Image</h2>
+          <img src="/image.png" alt="" className='w-[350px] mt-3'/>
+          <input type="file" name="image" id="image" className='mt-3'/>
+        </div>
+        <div>
+          <h2 className='font-bold text-xl'>Image</h2>
+          <img src="/template.png" alt="" className='w-[50px] mt-3'/>
+          <input type="file" name="image" id="image" className='mt-3'/>
+        </div>
+        <div>
+          <div>
+            <h2 className='font-bold text-xl'>Threshold</h2>
+            <input type="range" min="0" max="1" step="0.1" value={threshold} onChange={threshChange} className='mt-3'/>
+            <p>{threshold}</p>
+          </div>
+          <div className='mt-5'>
+            <h2 className='font-bold text-xl'>Method</h2>
+            <select name="method" id="method">
+            </select>
+          </div>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+      <div className='mt-5 flex flex-col items-center'>
+        <h2 className='font-bold text-xl text-center'>Result</h2>
+        <img src="/image.png" alt="" className='w-[350px] mt-3'/>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </div>
   )
 }
