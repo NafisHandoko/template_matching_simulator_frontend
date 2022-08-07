@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react'
 function App() {
   const [threshold, setThreshold] = useState(0.5)
   const [image, setImage] = useState(null)
+  const [template, setTemplate] = useState(null)
+
   const methods = [
     'TM_CCORR',
     'TM_CCORR_NORMED',
@@ -19,24 +21,10 @@ function App() {
   }
   const imageChange = (e) => {
     setImage(e.target.files[0])
-    const data = new FormData();
-    // data.append('photo', e.target.files[0]);
-    data.append('image', image);
-    // data.append('tes', 'tesaja');
-    fetch("http://localhost:5000/api/tm", {
-      method: 'POST',
-      // headers: {
-      //   'Accept': 'application/json',
-      //   'Content-Type': 'application/x-www-form-urlencoded'
-      // },
-      body: data
-    }).then((response) => {
-      return response.text();
-    }).then((data) => {
-      console.log(data)
-    })
   }
-  const templateChange = () => { }
+  const templateChange = (e) => {
+    setTemplate(e.target.files[0])
+  }
 
 
   const getFileBlob = function (url, cb) {
@@ -61,18 +49,42 @@ function App() {
     });
   };
 
-  useEffect(() => {
-    console.log(image)
-    // var imageInit = new File('blob:/image.png', 'file')
-    // console.log(imageInit)
-  }, [image])
+  // useEffect(() => {
+  //   console.log(image)
+  //   // var imageInit = new File('blob:/image.png', 'file')
+  //   // console.log(imageInit)
+  // }, [image])
 
   useEffect(() => {
     getFileObject('/image.png', function (fileObject) {
       // console.log(fileObject);
       setImage(new File([fileObject], 'image.png'))
     });
+    getFileObject('/template.png', function (fileObject) {
+      // console.log(fileObject);
+      setTemplate(new File([fileObject], 'template.png'))
+    });
   }, [])
+
+  useEffect(() => {
+    if (image && template) {
+      const data = new FormData();
+      data.append('image', image);
+      data.append('template', template);
+      fetch("http://localhost:5000/api/tm", {
+        method: 'POST',
+        // headers: {
+        //   'Accept': 'application/json',
+        //   'Content-Type': 'application/x-www-form-urlencoded'
+        // },
+        body: data
+      }).then((response) => {
+        return response.text();
+      }).then((data) => {
+        console.log(data)
+      })
+    }
+  }, [image, template])
 
   return (
     <div className="container mx-auto py-5">
@@ -87,9 +99,11 @@ function App() {
           <input type="file" name="image" id="image" className='mt-3' onChange={imageChange} />
         </div>
         <div>
-          <h2 className='font-bold text-xl'>Image</h2>
-          <img src="/template.png" alt="" className='w-[50px] mt-3' />
-          <input type="file" name="image" id="image" className='mt-3' />
+          <h2 className='font-bold text-xl'>Template</h2>
+          {template && (
+            <img src={URL.createObjectURL(template)} alt="not found" className='w-[50px] mt-3' />
+          )}
+          <input type="file" name="image" id="image" className='mt-3' onChange={templateChange} />
         </div>
         <div>
           <div>
