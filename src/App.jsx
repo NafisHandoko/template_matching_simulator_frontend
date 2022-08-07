@@ -19,9 +19,25 @@ function App() {
   }
   const imageChange = (e) => {
     setImage(e.target.files[0])
+    const data = new FormData();
+    // data.append('photo', e.target.files[0]);
+    data.append('image', image);
+    // data.append('tes', 'tesaja');
+    fetch("http://localhost:5000/api/tm", {
+      method: 'POST',
+      // headers: {
+      //   'Accept': 'application/json',
+      //   'Content-Type': 'application/x-www-form-urlencoded'
+      // },
+      body: data
+    }).then((response) => {
+      return response.text();
+    }).then((data) => {
+      console.log(data)
+    })
   }
   const templateChange = () => { }
-  
+
 
   const getFileBlob = function (url, cb) {
     var xhr = new XMLHttpRequest();
