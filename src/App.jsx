@@ -7,6 +7,14 @@ function App() {
   const threshChange = (e) => {
     setThreshold(e.target.value)
   }
+  const methods = [
+    'TM_CCORR',
+    'TM_CCORR_NORMED',
+    'TM_CCOEFF',
+    'TM_CCOEFF_NORMED',
+    'TM_SODIM',
+    'TM_SODIM_NORMED',
+  ]
 
   return (
     <div className="container mx-auto py-5">
@@ -31,6 +39,9 @@ function App() {
           <div className='mt-5'>
             <h2 className='font-bold text-xl'>Method</h2>
             <select name="method" id="method">
+              {methods.map(method => (
+                <option>{method}</option>
+              ))}
             </select>
           </div>
         </div>
