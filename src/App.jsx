@@ -6,7 +6,7 @@ function App() {
   const [threshold, setThreshold] = useState(0.5)
   const [image, setImage] = useState(null)
   const [template, setTemplate] = useState(null)
-  const [method, setMethod] = useState(0)
+  const [method, setMethod] = useState(1)
   const [result, setResult] = useState(null)
   const [detected, setDetected] = useState(null)
 
@@ -78,6 +78,7 @@ function App() {
       data.append('image', image);
       data.append('template', template);
       data.append('threshold', threshold);
+      data.append('method', method-1);
       fetch("http://localhost:5000/api/tm", {
         method: 'POST',
         headers: {
@@ -126,7 +127,7 @@ function App() {
             <h2 className='font-bold text-xl'>Method</h2>
             <select name="method" id="method" value={method} onChange={methodChange}>
               {methods.map((method, index) => (
-                <option key={index} value={index}>{method}</option>
+                <option key={index} value={index+1}>{method}</option>
               ))}
             </select>
           </div>
