@@ -69,10 +69,11 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (image && template) {
+    if (image && template && threshold) {
       const data = new FormData();
       data.append('image', image);
       data.append('template', template);
+      data.append('threshold', threshold);
       fetch("http://localhost:5000/api/tm", {
         method: 'POST',
         headers: {
@@ -90,7 +91,7 @@ function App() {
         setDetected(data.detected)
       })
     }
-  }, [image, template])
+  }, [image, template, threshold])
 
   return (
     <div className="container mx-auto py-5">
