@@ -6,6 +6,7 @@ function App() {
   const [threshold, setThreshold] = useState(0.5)
   const [image, setImage] = useState(null)
   const [template, setTemplate] = useState(null)
+  const [result, setResult] = useState(null)
 
   const methods = [
     'TM_CCORR',
@@ -73,15 +74,18 @@ function App() {
       data.append('template', template);
       fetch("http://localhost:5000/api/tm", {
         method: 'POST',
-        // headers: {
-        //   'Accept': 'application/json',
-        //   'Content-Type': 'application/x-www-form-urlencoded'
-        // },
+        headers: {
+          'Accept': 'application/json',
+          // 'Content-Type': 'application/x-www-form-urlencoded'
+        },
         body: data
       }).then((response) => {
-        return response.text();
+        // return response.blob();
+        return response.json()
       }).then((data) => {
-        console.log(data)
+        // console.log(data)
+        // setResult(new File([data], 'image.png'))
+        setResult(`data:image/png;base64,${data.img}`)
       })
     }
   }, [image, template])
@@ -123,7 +127,10 @@ function App() {
       </div>
       <div className='mt-5 flex flex-col items-center'>
         <h2 className='font-bold text-xl text-center'>Result</h2>
-        <img src="/image.png" alt="" className='w-[350px] mt-3' />
+        {/* <img src="/image.png" alt="" className='w-[350px] mt-3' /> */}
+        {result && (
+            <img src={result} alt="not found" className='w-[350px] mt-3' />
+        )}
       </div>
     </div>
   )
