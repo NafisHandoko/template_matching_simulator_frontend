@@ -7,6 +7,7 @@ function App() {
   const [image, setImage] = useState(null)
   const [template, setTemplate] = useState(null)
   const [result, setResult] = useState(null)
+  const [detected, setDetected] = useState(null)
 
   const methods = [
     'TM_CCORR',
@@ -86,6 +87,7 @@ function App() {
         // console.log(data)
         // setResult(new File([data], 'image.png'))
         setResult(`data:image/png;base64,${data.img}`)
+        setDetected(data.detected)
       })
     }
   }, [image, template])
@@ -129,7 +131,10 @@ function App() {
         <h2 className='font-bold text-xl text-center'>Result</h2>
         {/* <img src="/image.png" alt="" className='w-[350px] mt-3' /> */}
         {result && (
-            <img src={result} alt="not found" className='w-[350px] mt-3' />
+          <img src={result} alt="not found" className='w-[350px] mt-3' />
+        )}
+        {detected && (
+          <p className='mt-3 font-semibold text-emerald-600'>Detected object: {detected}</p>
         )}
       </div>
     </div>
