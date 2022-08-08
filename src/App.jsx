@@ -6,16 +6,17 @@ function App() {
   const [threshold, setThreshold] = useState(0.5)
   const [image, setImage] = useState(null)
   const [template, setTemplate] = useState(null)
+  const [method, setMethod] = useState(0)
   const [result, setResult] = useState(null)
   const [detected, setDetected] = useState(null)
 
   const methods = [
+    'TM_SQDIFF',
+    'TM_SQDIFF_NORMED',
     'TM_CCORR',
     'TM_CCORR_NORMED',
     'TM_CCOEFF',
     'TM_CCOEFF_NORMED',
-    'TM_SODIM',
-    'TM_SODIM_NORMED',
   ]
 
   const threshChange = (e) => {
@@ -26,6 +27,9 @@ function App() {
   }
   const templateChange = (e) => {
     setTemplate(e.target.files[0])
+  }
+  const methodChange = (e) => {
+    setMethod(e.target.value)
   }
 
 
@@ -69,7 +73,7 @@ function App() {
   }, [])
 
   useEffect(() => {
-    if (image && template && threshold) {
+    if (image && template && threshold && method) {
       const data = new FormData();
       data.append('image', image);
       data.append('template', template);
@@ -91,7 +95,7 @@ function App() {
         setDetected(data.detected)
       })
     }
-  }, [image, template, threshold])
+  }, [image, template, threshold, method])
 
   return (
     <div className="container mx-auto py-5">
@@ -120,9 +124,9 @@ function App() {
           </div>
           <div className='mt-5'>
             <h2 className='font-bold text-xl'>Method</h2>
-            <select name="method" id="method">
+            <select name="method" id="method" value={method} onChange={methodChange}>
               {methods.map((method, index) => (
-                <option key={index}>{method}</option>
+                <option key={index} value={index}>{method}</option>
               ))}
             </select>
           </div>
