@@ -104,10 +104,10 @@ function App() {
   }, [image, template, threshold, method, type])
 
   return (
-    <div className="container mx-auto py-5">
-      <h1 className='text-center font-bold text-3xl'>Template Matching Simulator</h1>
-      <div className="flex flex-row items-start mt-5 justify-between">
-        <div>
+    <div className="container mx-auto flex flex-col items-center">
+      <h1 className='text-center font-bold text-2xl m-9'>Template Matching Simulator</h1>
+      <div className="flex flex-row items-stretch justify-between space-x-5 self-stretch">
+        <div className='bg-white p-6 rounded-lg w-full'>
           <h2 className='font-bold text-xl'>Image</h2>
           {/* <img src="/image.png" alt="" className='w-[350px] mt-3'/> */}
           {image && (
@@ -115,15 +115,15 @@ function App() {
           )}
           <input type="file" name="image" id="image" className='mt-3' onChange={imageChange} />
         </div>
-        <div>
-          <h2 className='font-bold text-xl'>Template</h2>
-          {template && (
-            <img src={URL.createObjectURL(template)} alt="not found" className='w-[50px] mt-3' />
-          )}
-          <input type="file" name="image" id="image" className='mt-3' onChange={templateChange} />
-        </div>
-        <div>
+        <div className='bg-white p-6 rounded-lg w-full'>
           <div>
+            <h2 className='font-bold text-xl'>Template</h2>
+            {template && (
+              <img src={URL.createObjectURL(template)} alt="not found" className='w-[50px] mt-3' />
+            )}
+            <input type="file" name="image" id="image" className='mt-3' onChange={templateChange} />
+          </div>
+          <div className='mt-5'>
             <h2 className='font-bold text-xl'>Type</h2>
             <select name="type" id="type" value={type} onChange={typeChange}>
               <option value="0">SINGLE</option>
@@ -146,17 +146,18 @@ function App() {
             </div>
           )}
         </div>
+        <div className='bg-white p-6 rounded-lg w-full'>
+          <h2 className='font-bold text-xl text-center'>Result</h2>
+          {/* <img src="/image.png" alt="" className='w-[350px] mt-3' /> */}
+          {result && (
+            <img src={result} alt="not found" className='w-[350px] mt-3' />
+          )}
+          {!!detected && (
+            <p className='mt-3 font-semibold text-emerald-600'>Detected object: {detected}</p>
+          )}
+        </div>
       </div>
-      <div className='mt-5 flex flex-col items-center'>
-        <h2 className='font-bold text-xl text-center'>Result</h2>
-        {/* <img src="/image.png" alt="" className='w-[350px] mt-3' /> */}
-        {result && (
-          <img src={result} alt="not found" className='w-[350px] mt-3' />
-        )}
-        {!!detected && (
-          <p className='mt-3 font-semibold text-emerald-600'>Detected object: {detected}</p>
-        )}
-      </div>
+      <a href="http://github.com" target="_blank" rel="noopener noreferrer" className='border border-black rounded-lg mt-5 p-4 text-lg'><span></span>Repo</a>
     </div>
   )
 }
