@@ -106,13 +106,13 @@ function App() {
   return (
     <div className="container mx-auto flex flex-col items-center">
       <h1 className='text-center font-bold text-2xl mt-7'>Template Matching Simulator</h1>
-      <p className='italic text-gray-500 mb-7'>By <a href="http://linkedin" target="_blank" rel="noopener noreferrer">Nafis Arinda Rizky Putra Handoko</a></p>
+      <p className='italic text-gray-500 mb-7'>By <a href="https://www.linkedin.com/in/nafishandoko/" target="_blank" rel="noopener noreferrer">Nafis Arinda Rizky Putra Handoko</a></p>
       <div className="flex flex-row items-stretch justify-between space-x-5 self-stretch">
         <div className='bg-white p-6 rounded-lg w-full'>
           <h2 className='font-bold text-xl'>Image</h2>
           {/* <img src="/image.png" alt="" className='w-[350px] mt-3'/> */}
           {image && (
-            <img src={URL.createObjectURL(image)} alt="not found" className='w-[350px] mt-3' />
+            <img src={URL.createObjectURL(image)} alt="not found" className='w-[350px] mt-3 rounded-md' />
           )}
           <input type="file" name="image" id="image" className='mt-3' onChange={imageChange} />
         </div>
@@ -120,7 +120,7 @@ function App() {
           <div>
             <h2 className='font-bold text-xl'>Template</h2>
             {template && (
-              <img src={URL.createObjectURL(template)} alt="not found" className='w-[50px] mt-3' />
+              <img src={URL.createObjectURL(template)} alt="not found" className='w-[50px] mt-3 rounded-md' />
             )}
             <input type="file" name="image" id="image" className='mt-3' onChange={templateChange} />
           </div>
@@ -151,7 +151,7 @@ function App() {
           <h2 className='font-bold text-xl text-center'>Result</h2>
           {/* <img src="/image.png" alt="" className='w-[350px] mt-3' /> */}
           {result && (
-            <img src={result} alt="not found" className='w-[350px] mt-3' />
+            <img src={result} alt="not found" className='w-[350px] mt-3 rounded-md' />
           )}
           {!!detected && (
             <p className='mt-3 font-semibold text-emerald-600'>Detected object: {detected}</p>
@@ -161,8 +161,8 @@ function App() {
       {/* <a href="http://github.com" target="_blank" rel="noopener noreferrer" className='border border-black rounded-lg mt-7 px-4 py-3 text-lg hover:bg-black hover:text-white transition-all'><i className="bi bi-github mr-2"></i>Repo</a> */}
       <div className='border border-black rounded-lg mt-6 px-4 py-3 space-x-3 flex flex-row items-center'>
         <i className="bi bi-github text-xl"></i>
-        <a href="http://github" target="_blank" rel="noopener noreferrer" className='border border-black rounded-md px-4 py-3 hover:bg-black hover:text-white transition-all'>Frontend</a>
-        <a href="http://github" target="_blank" rel="noopener noreferrer" className='border border-black rounded-md px-4 py-3 hover:bg-black hover:text-white transition-all'>Backend</a>
+        <a href="https://github.com/NafisHandoko/template_matching_simulator_frontend" target="_blank" rel="noopener noreferrer" className='border border-black rounded-md px-4 py-3 hover:bg-black hover:text-white transition-all'>Frontend</a>
+        <a href="https://github.com/NafisHandoko/template_matching_simulator_backend" target="_blank" rel="noopener noreferrer" className='border border-black rounded-md px-4 py-3 hover:bg-black hover:text-white transition-all'>Backend</a>
       </div>
     </div>
   )
