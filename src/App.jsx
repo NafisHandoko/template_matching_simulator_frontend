@@ -7,6 +7,7 @@ function App() {
   const [image, setImage] = useState(null)
   const [template, setTemplate] = useState(null)
   const [method, setMethod] = useState(1)
+  const [type, setType] = useState(0)
   const [result, setResult] = useState(null)
   const [detected, setDetected] = useState(null)
 
@@ -30,6 +31,9 @@ function App() {
   }
   const methodChange = (e) => {
     setMethod(e.target.value)
+  }
+  const typeChange = (e) => {
+    setType(parseInt(e.target.value))
   }
 
 
@@ -78,7 +82,8 @@ function App() {
       data.append('image', image);
       data.append('template', template);
       data.append('threshold', threshold);
-      data.append('method', method-1);
+      data.append('method', method - 1);
+      data.append('type', type)
       fetch("http://localhost:5000/api/tm", {
         method: 'POST',
         headers: {
@@ -96,7 +101,7 @@ function App() {
         setDetected(data.detected)
       })
     }
-  }, [image, template, threshold, method])
+  }, [image, template, threshold, method, type])
 
   return (
     <div className="container mx-auto py-5">
@@ -119,18 +124,27 @@ function App() {
         </div>
         <div>
           <div>
-            <h2 className='font-bold text-xl'>Threshold</h2>
-            <input type="range" min="0" max="1" step="0.1" value={threshold} onChange={threshChange} className='mt-3' />
-            <p>{threshold}</p>
+            <h2 className='font-bold text-xl'>Type</h2>
+            <select name="type" id="type" value={type} onChange={typeChange}>
+              <option value="0">SINGLE</option>
+              <option value="1">MULTIPLE</option>
+            </select>
           </div>
           <div className='mt-5'>
             <h2 className='font-bold text-xl'>Method</h2>
             <select name="method" id="method" value={method} onChange={methodChange}>
               {methods.map((method, index) => (
-                <option key={index} value={index+1}>{method}</option>
+                <option key={index} value={index + 1}>{method}</option>
               ))}
             </select>
           </div>
+          {!!type && (
+            <div className='mt-5'>
+              <h2 className='font-bold text-xl'>Threshold</h2>
+              <input type="range" min="0" max="1" step="0.1" value={threshold} onChange={threshChange} className='mt-3' />
+              <p>{threshold}</p>
+            </div>
+          )}
         </div>
       </div>
       <div className='mt-5 flex flex-col items-center'>
@@ -139,7 +153,7 @@ function App() {
         {result && (
           <img src={result} alt="not found" className='w-[350px] mt-3' />
         )}
-        {detected && (
+        {!!detected && (
           <p className='mt-3 font-semibold text-emerald-600'>Detected object: {detected}</p>
         )}
       </div>
