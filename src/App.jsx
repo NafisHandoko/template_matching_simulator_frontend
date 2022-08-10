@@ -84,7 +84,7 @@ function App() {
       data.append('threshold', threshold);
       data.append('method', method - 1);
       data.append('type', type)
-      fetch("http://localhost:5000/api/tm", {
+      fetch("https://tm-simulator.herokuapp.com/api/tm", {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
